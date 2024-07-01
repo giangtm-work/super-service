@@ -1,0 +1,33 @@
+{
+  "name": "super-mapper",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/super-mapper/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/super-mapper",
+        "tsConfig": "libs/super-mapper/tsconfig.lib.json",
+        "packageJson": "libs/super-mapper/package.json",
+        "main": "libs/super-mapper/src/index.ts",
+        "assets": ["libs/super-mapper/*.md"]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    }
+  }
+}

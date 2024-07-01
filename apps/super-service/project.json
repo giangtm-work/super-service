@@ -1,0 +1,24 @@
+{
+  "name": "super-service",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/super-service/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "super-service:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "super-service:build:development"
+        },
+        "production": {
+          "buildTarget": "super-service:build:production"
+        }
+      }
+    }
+  }
+}
