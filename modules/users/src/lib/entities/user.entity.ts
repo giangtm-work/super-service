@@ -3,22 +3,22 @@ import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', length: 30 })
   name: string;
 
-  @Column({ type: 'varchar', length: 15 })
+  @Column({ type: 'varchar', length: 15, unique: true })
   username: string;
 
   @Column({ type: 'varchar', select: false })
   password: string;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 20, unique: true })
   phoneNumber: string;
 
-  @Column({ type: 'varchar', length: 40 })
+  @Column({ type: 'varchar', length: 40, unique: true })
   email: string;
 
   @Column({ type: 'int' })

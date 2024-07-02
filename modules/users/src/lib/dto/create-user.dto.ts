@@ -3,7 +3,8 @@ import {
   IsEmail,
   IsEnum,
   IsInt,
-  IsNotEmpty, IsPhoneNumber,
+  IsNotEmpty,
+  IsPhoneNumber,
   IsString,
   Matches,
   MinLength,
@@ -45,7 +46,9 @@ export class CreateUserDto {
   @IsInt()
   age: number;
 
-  @IsString()
   @IsEnum(['f', 'm', 'u'])
   gender: string;
+
+  @IsEnum(['2', '1', '0'])
+  status: string;
 }
