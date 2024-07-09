@@ -59,3 +59,18 @@ npx nx g @nx/nest:library super-mapper --directory=libs/super-mapper --buildable
 npm i bcrypt
 npm i -D @types/bcrypt
 ```
+
+### Implements `Auth` module
+```markdown
+npx nx g @nx/nest:library auth --directory=modules/auth
+cd modules/auth/src/lib
+npx nx g @nx/nest:controller auth
+npx nx g @nx/nest:service auth
+```
+
+https://docs.nestjs.com/recipes/passport#built-in-passport-guards
+```
+npm install --save @nestjs/jwt
+npm install --save @nestjs/passport passport passport-local passport-jwt
+npm install --save-dev @types/passport-local @types/passport-jwt
+```

@@ -1,0 +1,9 @@
+{
+  "name": "super-decorators",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/super-decorators/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project super-decorators --web",
+  "targets": {}
+}

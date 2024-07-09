@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from '@super-service/auth';
 import { OrdersModule } from '@super-service/orders';
 import { ProductsModule } from '@super-service/products';
+import { JwtAuthGuard } from '@super-service/super-guards';
 import { UsersModule } from '@super-service/users';
 
 import { AppController } from './app.controller';
@@ -21,11 +24,18 @@ import { AppService } from './app.service';
       logging: true,
       autoLoadEntities: true
     }),
+    AuthModule,
     UsersModule,
     ProductsModule,
     OrdersModule
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ]
 })
 export class AppModule {}

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dtoToEntity } from '@super-service/super-mapper';
+import * as bcrypt from 'bcrypt';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -24,10 +25,6 @@ export class UsersService {
     return this.userRepository.findOneBy({ id });
   }
 
-  findByUsername(username: string): Promise<User | null> {
-    return this.userRepository.findOneBy({ username });
-  }
-
   update(id: string, updateUserDto: UpdateUserDto): Promise<UpdateResult> {
     const user = new User();
     user.id = id;
@@ -36,5 +33,21 @@ export class UsersService {
 
   remove(id: string): Promise<DeleteResult> {
     return this.userRepository.delete(id);
+  }
+
+  findByUsernameWithPassword(username: string): Promise<User | null> {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .addSelect('user.password')
+      .where('user.username = :username', { username })
+      .getOne();
+  }
+
+  async validateUser(username: string, password: string): Promise<User | null> {
+    const user = await this.findByUsernameWithPassword(username);
+    if (user && await bcrypt.compare(password, user.password)) {
+      return user;
+    }
+    return null;
   }
 }
