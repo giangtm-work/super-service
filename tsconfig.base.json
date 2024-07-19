@@ -19,10 +19,13 @@
       "@super-service/auth": ["modules/auth/src/index.ts"],
       "@super-service/orders": ["modules/orders/src/index.ts"],
       "@super-service/products": ["modules/products/src/index.ts"],
+      "@super-service/roles": ["modules/roles/src/index.ts"],
       "@super-service/super-decorators": ["libs/super-decorators/src/index.ts"],
+      "@super-service/super-exception-filters": ["libs/super-exception-filters/src/index.ts"],
       "@super-service/super-guards": ["libs/super-guards/src/index.ts"],
       "@super-service/super-mapper": ["libs/super-mapper/src/index.ts"],
-      "@super-service/users": ["modules/users/src/index.ts"]
+      "@super-service/users": ["modules/users/src/index.ts"],
+      "@super-service/users-roles": ["modules/users-roles/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

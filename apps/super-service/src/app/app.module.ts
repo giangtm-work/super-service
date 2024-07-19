@@ -4,8 +4,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from '@super-service/auth';
 import { OrdersModule } from '@super-service/orders';
 import { ProductsModule } from '@super-service/products';
+import { RolesModule } from '@super-service/roles';
 import { JwtAuthGuard } from '@super-service/super-guards';
 import { UsersModule } from '@super-service/users';
+import { UsersRolesModule } from '@super-service/users-roles';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -26,6 +28,8 @@ import { AppService } from './app.service';
     }),
     AuthModule,
     UsersModule,
+    RolesModule,
+    UsersRolesModule,
     ProductsModule,
     OrdersModule
   ],
@@ -34,8 +38,8 @@ import { AppService } from './app.service';
     AppService,
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
+      useClass: JwtAuthGuard
+    }
   ]
 })
 export class AppModule {}

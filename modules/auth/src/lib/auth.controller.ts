@@ -1,12 +1,19 @@
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { Public } from '@super-service/super-decorators';
 import { JwtRefreshGuard, LocalAuthGuard } from '@super-service/super-guards';
+import { CreateUserDto } from '@super-service/users';
 import { AuthService } from './auth.service';
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
+
+  @Public()
+  @Post('register')
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.authService.register(createUserDto);
+  }
 
   @Public()
   @UseGuards(LocalAuthGuard)

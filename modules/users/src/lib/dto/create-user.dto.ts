@@ -4,25 +4,24 @@ import {
   IsEnum,
   IsInt,
   IsNotEmpty,
-  IsPhoneNumber,
+  IsOptional,
   IsString,
   Matches,
-  MinLength,
+  MinLength
 } from 'class-validator';
 
-const passwordRegEx =
-  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
+const passwordRegEx = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/;
 
 export class CreateUserDto {
-  @IsString()
-  @MinLength(2, { message: 'Name must have at least 2 characters.' })
   @IsNotEmpty()
+  @MinLength(2, { message: 'Name must have at least 2 characters.' })
+  @IsString()
   name: string;
 
   @IsNotEmpty()
   @MinLength(3, { message: 'Username must have at least 3 characters.' })
   @IsAlphanumeric(undefined, {
-    message: 'Username does not allow other than alpha numeric chars.',
+    message: 'Username does not allow other than alpha numeric chars.'
   })
   username: string;
 
@@ -32,23 +31,26 @@ export class CreateUserDto {
     at least one uppercase letter,
     one lowercase letter,
     one number and
-    one special character`,
+    one special character`
   })
   password: string;
 
-  @IsNotEmpty()
-  @IsPhoneNumber(undefined, { message: 'Please provide valid Phone number.' })
+  @IsOptional()
   phoneNumber: string;
 
+  @IsOptional()
   @IsEmail(undefined, { message: 'Please provide valid Email.' })
   email: string;
 
+  @IsOptional()
   @IsInt()
   age: number;
 
+  @IsOptional()
   @IsEnum(['f', 'm', 'u'])
-  gender: string;
+  gender = 'u';
 
+  @IsOptional()
   @IsEnum(['2', '1', '0'])
-  status: string;
+  status = '1';
 }

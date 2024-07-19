@@ -39,7 +39,7 @@ npm install --save @nestjs/typeorm typeorm pg
 npx nx g @nx/nest:library users --directory=modules/users
 rm -rf modules/users/src/lib/users.module.ts
 cd modules/users/
-nx g @nx/nest:resource users --directory=src/lib 
+nx g @nx/nest:resource users --directory=src/lib
 ```
 
 #### Install class-validator & class-transformer
@@ -60,7 +60,7 @@ npm i bcrypt
 npm i -D @types/bcrypt
 ```
 
-### Implements `Auth` module
+### Implements `Authentication` module
 ```markdown
 npx nx g @nx/nest:library auth --directory=modules/auth
 cd modules/auth/src/lib

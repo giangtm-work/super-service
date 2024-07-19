@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User, UsersService } from '@super-service/users';
 import { Repository } from 'typeorm';
+import { CreateUserDto } from '@super-service/users';
 import { jwtConstants } from './constants';
 import { RefreshToken } from './entities/refresh-token.entity';
 
@@ -11,7 +12,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-    @InjectRepository(RefreshToken) private readonly refreshTokenRepository: Repository<RefreshToken>,
+    @InjectRepository(RefreshToken) private readonly refreshTokenRepository: Repository<RefreshToken>
   ) {}
 
   validateUser(username: string, password: string): Promise<User | null> {
@@ -77,5 +78,9 @@ export class AuthService {
 
   async removeAllRefreshTokens(userId: string): Promise<void> {
     await this.refreshTokenRepository.delete({ userId });
+  }
+
+  async register(createUserDto: CreateUserDto) {
+    await this.usersService.create(createUserDto);
   }
 }
