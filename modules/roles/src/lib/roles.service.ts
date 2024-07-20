@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { dtoToEntity } from '@super-service/super-mapper';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { Role } from './entities/role.entity';
@@ -20,6 +20,10 @@ export class RolesService {
 
   findById(id: string) {
     return this.roleRepository.findOneBy({ id });
+  }
+
+  findByIds(ids: string[]) {
+    return this.roleRepository.findBy({ id: In(ids) });
   }
 
   update(id: string, updateRoleDto: UpdateRoleDto) {

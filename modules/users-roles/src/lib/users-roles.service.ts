@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Role } from '@super-service/roles';
-import { User } from '@super-service/users';
-import { In, Repository } from 'typeorm';
+import { UsersService } from '@super-service/users';
+import { Repository } from 'typeorm';
+import { RolesService } from '@super-service/roles';
 import { UserRolesDto } from './dto/user-roles.dto';
 import { UserRole } from './entities/user-role.entity';
 
@@ -11,20 +11,18 @@ export class UsersRolesService {
   constructor(
     @InjectRepository(UserRole)
     private userRoleRepository: Repository<UserRole>,
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-    @InjectRepository(Role)
-    private roleRepository: Repository<Role>
+    private usersService: UsersService,
+    private rolesService: RolesService
   ) {}
 
   async assignRolesToUser(userRolesDto: UserRolesDto) {
     const { userId, roleIds } = userRolesDto;
-    const user = await this.userRepository.findOneBy({ id: userId });
+    const user = await this.usersService.findById(userId);
     if (!user) {
       throw new Error('User not found');
     }
 
-    const roles = await this.roleRepository.findBy({ id: In(roleIds) });
+    const roles = await this.rolesService.findByIds(roleIds);
     if (roles.length !== roleIds.length) {
       throw new Error('One or more roles not found');
     }
@@ -45,12 +43,12 @@ export class UsersRolesService {
 
   async removeRolesFromUser(userRolesDto: UserRolesDto) {
     const { userId, roleIds } = userRolesDto;
-    const user = await this.userRepository.findOneBy({ id: userId });
+    const user = await this.usersService.findById(userId);
     if (!user) {
       throw new Error('User not found');
     }
 
-    const roles = await this.roleRepository.findByIds(roleIds);
+    const roles = await this.rolesService.findByIds(roleIds);
     if (roles.length !== roleIds.length) {
       throw new Error('One or more roles not found');
     }
