@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User, UsersService } from '@super-service/users';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from '@super-service/users';
+import { UsersRolesService } from '@super-service/users-roles';
 import { jwtConstants } from './constants';
 import { RefreshToken } from './entities/refresh-token.entity';
 
@@ -11,6 +12,7 @@ import { RefreshToken } from './entities/refresh-token.entity';
 export class AuthService {
   constructor(
     private usersService: UsersService,
+    private usersRolesService: UsersRolesService,
     private jwtService: JwtService,
     @InjectRepository(RefreshToken) private readonly refreshTokenRepository: Repository<RefreshToken>
   ) {}
@@ -24,7 +26,8 @@ export class AuthService {
   }
 
   private async generateToken(user: User) {
-    const payload = { username: user.username, sub: user.id };
+    const roles = await this.usersRolesService.getActiveRolesForUser(user.id);
+    const payload = { username: user.username, sub: user.id, roles };
     // https://github.com/auth0/node-jsonwebtoken#usage
     const accessToken = this.jwtService.sign(payload, { expiresIn: jwtConstants.expiresIn });
     const refreshToken = this.jwtService.sign(payload, { expiresIn: jwtConstants.refreshExpiresIn });

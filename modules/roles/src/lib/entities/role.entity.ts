@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { RoleStatus } from '../models/role.model';
 
 @Entity()
 export class Role {
@@ -8,7 +9,7 @@ export class Role {
   @Column({ type: 'varchar', length: 30, unique: true })
   name: string;
 
-  @Column({ type: 'enum', enum: ['1', '0'], default: '1' })
+  @Column({ type: 'enum', enum: [RoleStatus.Active, RoleStatus.Inactive], default: RoleStatus.Active })
   /**
    * 1 - active
    * 0 - inactive

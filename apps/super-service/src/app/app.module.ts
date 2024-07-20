@@ -5,7 +5,7 @@ import { AuthModule } from '@super-service/auth';
 import { OrdersModule } from '@super-service/orders';
 import { ProductsModule } from '@super-service/products';
 import { RolesModule } from '@super-service/roles';
-import { JwtAuthGuard } from '@super-service/super-guards';
+import { JwtAuthGuard, RolesGuard } from '@super-service/super-guards';
 import { UsersModule } from '@super-service/users';
 import { UsersRolesModule } from '@super-service/users-roles';
 
@@ -39,6 +39,10 @@ import { AppService } from './app.service';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard
     }
   ]
 })

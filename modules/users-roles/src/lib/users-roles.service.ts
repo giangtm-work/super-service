@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { RolesService, RoleStatus } from '@super-service/roles';
 import { UsersService } from '@super-service/users';
 import { Repository } from 'typeorm';
-import { RolesService } from '@super-service/roles';
 import { UserRolesDto } from './dto/user-roles.dto';
 import { UserRole } from './entities/user-role.entity';
 
@@ -70,6 +70,12 @@ export class UsersRolesService {
       relations: ['role']
     });
 
-    return userRoles.map((userRole) => userRole.role);
+    return userRoles.map((userRole) => userRole.role).map((role) => ({ name: role.name, status: role.status }));
+  }
+
+  async getActiveRolesForUser(userId: string) {
+    const userRoles = await this.getRolesForUser(userId);
+
+    return userRoles.filter((roles) => roles.status === RoleStatus.Active).map((activeRoles) => activeRoles.name);
   }
 }

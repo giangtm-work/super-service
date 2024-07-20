@@ -1,4 +1,5 @@
 import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { RoleStatus } from '../models/role.model';
 
 export class CreateRoleDto {
   @IsString()
@@ -6,6 +7,6 @@ export class CreateRoleDto {
   name: string;
 
   @IsOptional()
-  @IsEnum(['1', '0'])
-  status = '1';
+  @IsEnum([RoleStatus.Active, RoleStatus.Inactive])
+  status = RoleStatus.Active;
 }
